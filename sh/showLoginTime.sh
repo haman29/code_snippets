@@ -3,6 +3,8 @@
 # @feature
 #  月ごとのログイン時間を集計する
 #  年は考慮されていない
+# @use
+#  ./showLoginTime.sh [USERNAME]
 # @author kyohei.hamada
 last | awk --assign name="$1" '
     $1 == name {
