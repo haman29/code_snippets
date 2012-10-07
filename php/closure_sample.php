@@ -65,6 +65,20 @@ $func(); // 1
 $func(); // 2
 $func(); // 3
 
+// おまけ
+// クラスでやるとこうなる
+class Hoge {
+    private $i = 1;
+    public function increment() {
+        println($this->i);
+        $this->i++;
+    }
+}
+$hoge = new Hoge;
+$hoge->increment();
+$hoge->increment();
+$hoge->increment();
+
 /* 実行結果
 inner
 speak
