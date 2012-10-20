@@ -3,7 +3,7 @@
 # @feature
 #  月ごとのログイン時間を集計する
 #  年は考慮されていない
-# @use
+# @usage
 #  ./showLoginTime.sh [USERNAME]
 # @author kyohei.hamada
 last | awk --assign name="$1" '
@@ -20,3 +20,4 @@ last | awk --assign name="$1" '
         for (i in h) printf("(%s) %02d:%02d\n", i, h[i], m[i])
     }
 '
+exit $?
