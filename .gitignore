@@ -1,2 +1,2 @@
 /tags
-coffeescript/*.js
+coffeescript/**/*.js
