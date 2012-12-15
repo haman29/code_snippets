@@ -6,7 +6,7 @@
 # @usage
 #  ./showLoginTime.sh [USERNAME]
 # @author kyohei.hamada
-last | awk --assign name="$1" '
+last | gawk --assign name="$1" '
     $1 == name {
         date = $5
         h[date] = h[date] + substr($10, 2, 2) # hour
