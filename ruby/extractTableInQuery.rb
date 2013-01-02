@@ -38,7 +38,7 @@ class UsedTableExtractor
 end
 
 if __FILE__ == $0
-  e = UsedTableExtractor.new ['mtb_', 'dtb_', 't_']
+  e = UsedTableExtractor.new ['m_', 't_', 'l_']
   while line = gets
     e.setTableInQuery line
   end
