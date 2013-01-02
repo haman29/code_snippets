@@ -1,5 +1,5 @@
 require 'test/unit'
-require '../extractTableInQuery'
+require '../usedTableExtractor'
 
 class TC_UsedTableExtractor < Test::Unit::TestCase
   def setup
