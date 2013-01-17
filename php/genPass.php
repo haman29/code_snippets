@@ -1,17 +1,44 @@
 <?php
-// 英数字のランダム文字列を10個生成する
-function genPass($size = 8) {
+/**
+ * 英数字のランダム文字列を生成する
+ *
+ * @param $size ランダム文字列のサイズ
+ */
+function generateRandomString($size = 8) {
+    $char_list_str = array_merge(range('a', 'z'), range('0', '9'), range('A', 'Z'));
+
     if ($size < 1) {
         return false;
     }
-    $charlist_str = "abcdefghijklnmopqrstuvwxyzABCDEFGHIJKLNMOPQRSTUVWXYZ0123456789";
-    $charlist_arr = preg_split('//', $charlist_str, -1, PREG_SPLIT_NO_EMPTY);
-    $charlist_size = count($charlist_arr);
-    $pass = '';
-    foreach(range(1, $size) as $i) {
-        $pass .= $charlist_arr[mt_rand(0, $charlist_size - 1)];
+    if ($size === 1) {
+        return $char_list_str[array_rand($char_list_str, 1)];
     }
-    return $pass;
+    $randomString = '';
+    foreach (array_rand($char_list_str, $size) as $k) {
+        $randomString .= $char_list_str[$k];
+    }
+    return $randomString;
 }
-
-foreach(range(1, 10) as $i) echo genPass(8) . "\n";
+var_dump(generateRandomString(-1));
+var_dump(generateRandomString(0));
+echo generateRandomString(1) . "\n";
+echo generateRandomString(2) . "\n";
+echo generateRandomString(3) . "\n";
+echo generateRandomString(4) . "\n";
+echo generateRandomString(5) . "\n";
+echo generateRandomString(6) . "\n";
+echo generateRandomString(7) . "\n";
+echo generateRandomString(8) . "\n";
+/** example **/
+/*
+bool(false)
+bool(false)
+6
+EW
+tvJ
+k689
+su8DO
+w9BIKQ
+x9KLOUZ
+afjs4OQR
+*/
