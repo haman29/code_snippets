@@ -14,7 +14,7 @@ if (preg_match($pattern, $url) === 0) {
     echo 'out';
 }
 
-// example1
+// example2
 $url2 = 'http://hoge.example.com/frontparts/login_check.php';
 var_dump($url2);
 var_dump($pattern);
@@ -24,3 +24,7 @@ if (preg_match($pattern, $url2) === 0) {
 } else {
     echo 'out';
 }
+
+// example3
+$url = parse_url(HTTP_URL);
+var_dump($url['host']);
