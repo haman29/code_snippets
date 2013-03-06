@@ -9,9 +9,9 @@ test( "hello qunit", function() {
     ok(1 == "1", "Passed!" );
     ok(func(), "func() Passed!" );
 
-    var actual = func();
     var expected = true;
-    deepEqual(expected, actual, "expected === actual")
+    var actual = func();
+    deepEqual(actual, expected, "actual === expected")
 });
 
 module('prime');
