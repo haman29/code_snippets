@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <form action="">
+        <input type="text" id="search" />
+    </form>
+    <div class="well">
+<input type="text" class="span3" style="margin: 0 auto;" data-provide="typeahead" data-items="4" data-source="[&quot;Ahmedabad&quot;,&quot;Akola&quot;,&quot;Asansol&quot;,&quot;Aurangabad&quot;,&quot;Bangaluru&quot;,&quot;Baroda&quot;,&quot;Belgaon&quot;,&quot;Berhumpur&quot;,&quot;Calicut&quot;,&quot;Chennai&quot;,&quot;Chapra&quot;,&quot;Cherapunji&quot;]">
+    </div>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript">
+        var colors = ["red", "blue", "green", "yellow", "brown", "black"];
+        $('#search').typeahead({source: colors});
+    </script>
+</body>
+</html>
