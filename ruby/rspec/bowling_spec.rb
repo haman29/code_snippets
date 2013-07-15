@@ -1,5 +1,5 @@
 require 'rspec'
-require 'bowling.rb'
+require './bowling.rb'
 
 describe Bowling, "#score" do
   it "returns 0 for all gutter game" do

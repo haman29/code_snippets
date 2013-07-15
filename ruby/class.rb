@@ -6,3 +6,4 @@ class Hoge
 end
 hoge = Hoge.new
 hoge.filter
+
