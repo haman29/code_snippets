@@ -7,12 +7,14 @@ def password_gen2(size=8)
     p [*0..9,  *'a'..'z',  *'A'..'Z'].sample(size).join
 end
 
-p 'case1'
-p 10.times.map { password_gen 8}
-p 'case2'
-10.times { password_gen2 8}
-p 'case3'
-10.times { |n| password_gen2 n+1}
+puts password_gen ARGV[0].to_i
+
+# p 'case1'
+# p 10.times.map { password_gen 8}
+# p 'case2'
+# 10.times { password_gen2 8}
+# p 'case3'
+# 10.times { |n| password_gen2 n+1}
 
 =begin
 1
