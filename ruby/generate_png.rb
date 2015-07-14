@@ -1,8 +1,10 @@
-# time ruby generate_png.rb > hoge.png
-# open hoge.png
+# $ time ruby generate_png.rb > hoge.png
+# ruby ~/code_snippets/ruby/generate_png.rb > hoge.png  443.16s user 2.20s system 99% cpu 7:26.16 total
+# $ du -sh hoge.png
+# 8.0M    hoge.png
 require "zlib"
 
-width, height = 100000, 10000
+width, height = 1000, 1000
 
 # グラデーションのベタデータ
 line = (0...width).map {|x| [x * 255 / width, 0, 0] }
