@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>JSで撮るスクリーンショット</title>
+</head>
+<body>
+  <h1>JSで撮るスクリーンショット</h1>
+  <h2>導入方法</h2>
+  <ol>
+    <li>html2canvas.jsを読込む</li>
+    <li>html2canvas関数を呼ぶ</li>
+    <li>onrenderedでSSが書き込まれたcanvasを好きなように使う</li>
+  </ol>
+  <div class="divclass">
+    <h2>注意</h2>
+    <img src="http://placehold.jp/150x150.png" alt="dummy">
+    <ul>
+      <li>Webサーバーに配置しないとエラーになるかも（firefox30.0でローカルで動作確認）</li>
+      <li>このサンプルではブラウザによっては、ダウンロードできないかも</li>
+      <li>flashやapplet,iframeはうまくキャプチャできない</li>
+    </ul>
+  </div>
+  <a href="#" id="ss" download="ss.png">スクリーンショット</a>
+  <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="./html2canvas.min.js"></script>
+  <script>
+    window.onload = function(){
+      html2canvas($('.divclass'),{
+        background: '#fff',
+        onrendered: function(canvas){
+          //aタグのhrefにキャプチャ画像のURLを設定
+          document.getElementById("ss").href = canvas.toDataURL("image/png");
+        }
+      });
+    }
+  </script>
+</body>
+</html>
