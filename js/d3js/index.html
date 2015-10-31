@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>D3.js sample</title>
+  <script src="./d3.js"></script>
+  <script src="./index.js"></script>
+  <style>
+    div.bar {
+      display: inline-block;
+      width: 20px;
+      height: 75px;   /* この数値は実行時に上書きされます */
+      background-color: teal;
+      margin: 0px 1px;
+    }
+
+    // 6.
+    body {
+        font: 10px sans-serif;
+    }
+    .arc path {
+        stroke: #fff;
+    }
+    .arc-member path {
+        stroke: #fff;
+    }
+  </style>
+</head>
+<body>
+  <svg width="500" height="50">
+    <rect x="0" y="0" width="500" height="50" fill="gray"/>
+    <ellipse cx="250" cy="25" rx="100" ry="25"/>
+    <circle cx="250" cy="25" r="25" fill="red"/>
+    <line x1="0" y1="0" x2="500" y2="50" stroke="black"/>
+    <text x="250" y="25" font-family="sans-serif" font-size="25" fill="green">javascript</text>
+    <circle cx="25" cy="25" r="22" fill="yellow" stroke="orange" stroke-width="5"/>
+  </svg>
+</body>
+</html>
