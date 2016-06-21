@@ -11,3 +11,16 @@ def exception
 end
 
 p exception
+
+
+begin
+  # raise StandardError
+  # raise Exception
+  raise ActiveRecord::RecordNotUnique.new('mock', 'mock')
+rescue Exception => e
+  puts '1'
+  puts e
+rescue StandardError => e
+  puts '2'
+  puts e
+end
