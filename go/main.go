@@ -27,6 +27,17 @@ func main() {
 	fmt.Println(mark_room(str, "0708"))
 }
 
+// ➜  go git:(master) ✗ go run main.go
+// +------+
+// |      |
+// | 0708 |
+// |      |
+// +------+
+// +------+
+// |      |
+// | 0708 |
+// | ---- |
+// +------+
 func mark_room(str string, room string) string {
 	width := strings.Index(str, "\n")
 	pos := strings.Index(str, room)
