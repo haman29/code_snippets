@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strings"
+	"io/ioutil"
 )
 
 func main() {
@@ -18,11 +19,15 @@ func main() {
 		 // }
 	// fmt.Println(arr3)
 
-	str := `+------+
-|      |
-| 0708 |
-|      |
-+------+`
+	// str := `+------+
+// |      |
+// | 0708 |
+// |      |
+// +------+`
+	// fmt.Println(str)
+	// fmt.Println(mark_room(str, "0708"))
+	contents, _ := ioutil.ReadFile("./map.txt")
+	str := string(contents)
 	fmt.Println(str)
 	fmt.Println(mark_room(str, "0708"))
 }
