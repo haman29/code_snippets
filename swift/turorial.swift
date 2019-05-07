@@ -1,5 +1,6 @@
 // swift tutorial
 // https://employment.en-japan.com/engineerhub/entry/2017/05/25/110000
+// https://github.com/hatena/Hatena-Textbook/blob/master/swift-programming-language.md
 
 // imutable
 let immutableStr = "hello"
