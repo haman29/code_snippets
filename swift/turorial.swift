@@ -2,6 +2,8 @@
 // https://employment.en-japan.com/engineerhub/entry/2017/05/25/110000
 // https://github.com/hatena/Hatena-Textbook/blob/master/swift-programming-language.md
 
+import Foundation
+
 // imutable
 let immutableStr = "hello"
 assert(immutableStr == "hello")
@@ -458,7 +460,7 @@ do {
 do {
   class Lot {
     var remains: [String]
-    init(_ elements: String...) {
+    init(_ elements: [String]) {
       self.remains = elements
     }
     func choose() -> String? {
@@ -476,7 +478,121 @@ do {
     }
     return result
   }
-  let lot = Lot("Swift", "Objective-C", "Java", "Scala", "Perl", "Ruby")
-  print(pick(from: lot, count: 3))
-  print(lot.remains)
+  let input: [String] = ["Swift", "Objective-C", "Java", "Scala", "Perl", "Ruby"]
+  let lot: Lot = Lot(input)
+  assert((pick(from: lot, count: 3) + lot.remains).sorted() == input.sorted())
+}
+
+// Properties and Methods
+// Stored Properties
+do {
+  class Dog {
+      var name: String?
+  }
+  let dog = Dog()
+  dog.name = "Pochi"
+  assert(dog.name == "Pochi")
+}
+
+// lazy
+do {
+  class DataFormatter {
+      var format: String = ""
+  }
+  class DataPrinter {
+      lazy var formatter = DataFormatter()
+      var data: [String] = []
+  }
+  let printer = DataPrinter()
+  assert(printer.data == [])
+}
+
+// computed properties
+do {
+  struct Circle {
+    var radius: Double = 0.0
+    var area: Double {
+      get {
+        return pow(radius, 2) * Double.pi
+      }
+      set (newArea) {
+        radius = sqrt(newArea / Double.pi)
+      }
+    }
+  }
+  var circle: Circle = Circle()
+  assert(circle.area == 0.0)
+  circle.area = 2.0
+  assert(circle.area == 2.0)
+}
+
+// property observers
+do {
+  struct Dam {
+    let limit = 100.0
+    var waterLevel = 0.0 {
+      willSet {
+        assert("\(newValue - waterLevel) will change" == "120.0 will change")
+      }
+      didSet {
+        var result: String = ""
+        if waterLevel > limit {
+          result = "Bursted"
+          waterLevel = limit
+        }
+        assert(result == "Bursted")
+        assert("\(waterLevel - oldValue) did change" == "100.0 did change")
+      }
+    }
+  }
+  var dam = Dam()
+  dam.waterLevel = 120
+  assert(dam.waterLevel == 100)
+}
+
+// Methods
+do {
+  class Printer {
+    var numberOfCopies = 1
+    func put(string: String) {
+      for _ in (0..<self.numberOfCopies) {
+        assert(string == "Word")
+      }
+    }
+  }
+  let printer = Printer()
+  printer.put(string: "Word")
+}
+
+// mutating Methods
+do {
+  struct StepCounter {
+    var count: Int = 0
+    mutating func step() {
+      count += 1
+    }
+  }
+  var counter = StepCounter()
+  counter.step()
+  counter.step()
+  assert(counter.count == 2)
+}
+
+// enum
+do {
+  enum ToggleSwitch {
+    case on
+    case off
+    mutating func toggle() {
+      switch self {
+      case .on:
+        self = .off
+      case .off:
+        self = .on
+      }
+    }
+  }
+  var electricSwitch = ToggleSwitch.off
+  electricSwitch.toggle()
+  assert(electricSwitch == ToggleSwitch.on)
 }
