@@ -640,7 +640,6 @@ do {
 }
 
 // Failable Initializers
-
 do {
   struct Tweet {
     let message: String
@@ -661,4 +660,160 @@ do {
   }
   assert(result1 == "Hello there")
   assert(result2 == "")
+}
+
+// Casting
+do {
+  class File {
+    var filename: String
+    init(filename: String) {
+      self.filename = filename
+    }
+  }
+  class SwiftFile: File {
+    func compile() -> File {
+      return File(filename: filename + ".output")
+    }
+  }
+  class Xcode {
+    var sources: [File] = []
+    func build() -> [File] {
+      var compiled: [File] = []
+      for source in sources {
+        if let swift = source as? SwiftFile {
+          compiled.append(swift.compile())
+        } else {
+          compiled.append(source)
+        }
+      }
+      return compiled
+    }
+  }
+
+  let xcode: Xcode = Xcode()
+  xcode.sources = [File(filename: "hoge"), SwiftFile(filename: "fuga")]
+  assert(xcode.build().map{ file in file.filename } == ["hoge", "fuga.output"])
+}
+
+// Protocols
+protocol FileSystemItem {
+  var name: String { get }
+  var path: String { get }
+  init(directory: Directory, name: String)
+  func copy() -> Self
+}
+struct File: FileSystemItem {
+  var name: String {
+    return Array(path).split { (char) -> Bool in char == "/" }.last.map { String($0) } ?? ""
+  }
+  let path: String
+
+  init(path: String) {
+    self.path = path
+  }
+  init(directory: Directory, name: String) {
+    self.init(path: directory.path + name)
+  }
+  func copy() -> File {
+    return File(path: path + " copy")
+  }
+}
+struct Directory: FileSystemItem {
+  var name: String {
+    return Array(path).split { (char) -> Bool in char == "/" }.last.map { String($0) } ?? ""
+  }
+  let path: String
+  init(path: String) {
+    self.path = path
+  }
+  init(directory: Directory, name: String) {
+    self.init(path: directory.path + name + "/")
+  }
+  func copy() -> Directory {
+    return Directory(path: path[path.startIndex..<(path.index(before: path.endIndex))] + " copy/")
+  }
+}
+
+// extensions
+extension String {
+  var isHiragana: Bool {
+    return unicodeScalars.reduce(!isEmpty) { (result, unicode) -> Bool in
+      return result && 0x3040 <= unicode.value && unicode.value < 0x30A0
+    }
+  }
+}
+assert("こんにちは".isHiragana == true)
+assert("hoge".isHiragana == false)
+
+// protocol extensions
+protocol Hiraganable {
+  var isHiragana2: Bool { get }
+}
+extension String: Hiraganable {
+  var isHiragana2: Bool {
+    return unicodeScalars.reduce(!isEmpty) { (result, unicode) -> Bool in
+      return result && 0x3040 <= unicode.value && unicode.value < 0x30A0
+    }
+  }
+}
+extension Collection where Iterator.Element : Hiraganable {
+  var isHiragana2: Bool {
+    return reduce(!isEmpty) { (result, string) -> Bool in
+      return result && string.isHiragana2
+    }
+  }
+}
+assert(["あいうえお", "かきくけこ"].isHiragana2 == true)
+
+// error handling
+/*
+do {
+  enum NetworkError: Error {
+    case Unreachable
+    case UnexpectedStatusCode(Int)
+  }
+
+  func getResourceFromNetwork() throws -> String {
+    let URL = "http://www.hatena.ne.jp/"
+    if !checkConnection(URL) {
+      throw NetworkError.Unreachable
+    }
+    let (statusCode, response) = connectHTTP(URL, method: "GET")
+    if case (200..<300) = statusCode {
+      return response
+    } else {
+      throw NetworkError.UnexpectedStatusCode(statusCode)
+    }
+  }
+
+  do {
+    let res = try getResourceFromNetwork()
+    print(res)
+  } catch NetworkError.Unreachable {
+    print("Unreachable")
+  } catch NetworkError.UnexpectedStatusCode(let statusCode) {
+    print("Unexpected status code \(statusCode)")
+  } catch {
+    print("Unknown problem")
+  }
+}
+*/
+
+// Generics
+do {
+  class ConsumptionLot<Item> {
+    var remains: [Item]
+    required init(_ items: Item...) {
+      self.remains = items
+    }
+    func choose() -> Item? {
+      if remains.isEmpty {
+        return nil
+      }
+      let randomIndex = Int(arc4random_uniform(UInt32(remains.count)))
+      return remains.remove(at: randomIndex)
+    }
+  }
+  let lot = ConsumptionLot("A", "B", "C")
+  lot.choose()
 }
