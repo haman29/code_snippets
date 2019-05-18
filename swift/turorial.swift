@@ -596,3 +596,69 @@ do {
   electricSwitch.toggle()
   assert(electricSwitch == ToggleSwitch.on)
 }
+
+// Subscripts
+do {
+  struct OddNumbers {
+    subscript(index: Int) -> Int {
+      return index * 2
+    }
+  }
+  let odds = OddNumbers()
+  assert(odds[3] == 6)
+}
+
+// Inheritance
+do {
+  class Animal {
+    func bark() -> String {
+      return ""
+    }
+  }
+  class Dog: Animal {
+    override func bark() -> String {
+      return "Bark"
+    }
+  }
+  let pochi: Animal = Dog()
+  assert(pochi.bark() == "Bark")
+}
+
+// Initializers
+do {
+  struct Length {
+    let meter: Double
+    init(meter: Double) {
+      self.meter = meter
+    }
+    init(yard: Double) {
+      self.meter = yard / 0.9144
+    }
+  }
+  assert(Length(yard: 245.6).meter == 268.59142607174101)
+  assert(Length(meter: 245.6).meter == 245.6)
+}
+
+// Failable Initializers
+
+do {
+  struct Tweet {
+    let message: String
+    init?(message: String) {
+      guard message.count <= 140 else {
+        return nil
+      }
+      self.message = message
+    }
+  }
+  var result1: String = ""
+  var result2: String = ""
+  if let tweet = Tweet(message: "Hello there") {
+    result1 = tweet.message
+  }
+  if let tweet = Tweet(message: "Hello therexxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx") {
+    result2 = tweet.message
+  }
+  assert(result1 == "Hello there")
+  assert(result2 == "")
+}
