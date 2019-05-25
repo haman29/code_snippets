@@ -1,6 +1,6 @@
 // swift tutorial
 // https://employment.en-japan.com/engineerhub/entry/2017/05/25/110000
-// https://github.com/hatena/Hatena-Textbook/blob/master/swift-programming-language.md
+// 後半はほぼこれ https://github.com/hatena/Hatena-Textbook/blob/master/swift-programming-language.md
 
 import Foundation
 
@@ -357,7 +357,7 @@ do {
 do {
   // `_` つけるとkey省略して渡せる
   func sum(_ numbers: Int...) -> Int {
-      return numbers.reduce(0, +)
+    return numbers.reduce(0, +)
   }
   assert(sum(1, 4, 7) == 12)
 }
@@ -400,7 +400,7 @@ do {
   assert(
     [0, 1, 2, 3, 4, 5].map({ (number: Int) -> Int in
       return 2 * number
-    })
+                           })
     == [0, 2, 4, 6, 8, 10]
   )
 }
@@ -416,27 +416,27 @@ do {
 
 // enum
 enum ArithmeticOperation {
-    case add
-    case subtract
-    case multiply
-    case divide
+  case add
+  case subtract
+  case multiply
+  case divide
 }
 enum Diagram {
-    case line(Double)
-    case rectangle(Double, Double)
-    case circle(Double)
+  case line(Double)
+  case rectangle(Double, Double)
+  case circle(Double)
 }
 func calculateArea(of diagram: Diagram) -> Double {
-    let area: Double
-    switch diagram {
-    case .line(_):
-        area = 0.0
-    case let .rectangle(width, height):
-        area = width * height
-    case .circle(let radius):
-        area = radius * radius * Double.pi
-    }
-    return area
+  let area: Double
+  switch diagram {
+  case .line(_):
+    area = 0.0
+  case let .rectangle(width, height):
+    area = width * height
+  case .circle(let radius):
+    area = radius * radius * Double.pi
+  }
+  return area
 }
 assert(calculateArea(of: .line(3.0)) == 0.0)
 assert(calculateArea(of: .rectangle(2.0, 3.0)) == 6.0)
@@ -487,7 +487,7 @@ do {
 // Stored Properties
 do {
   class Dog {
-      var name: String?
+    var name: String?
   }
   let dog = Dog()
   dog.name = "Pochi"
@@ -497,11 +497,11 @@ do {
 // lazy
 do {
   class DataFormatter {
-      var format: String = ""
+    var format: String = ""
   }
   class DataPrinter {
-      lazy var formatter = DataFormatter()
-      var data: [String] = []
+    lazy var formatter = DataFormatter()
+    var data: [String] = []
   }
   let printer = DataPrinter()
   assert(printer.data == [])
@@ -705,33 +705,33 @@ protocol FileSystemItem {
 struct File: FileSystemItem {
   var name: String {
     return Array(path).split { (char) -> Bool in char == "/" }.last.map { String($0) } ?? ""
-  }
-  let path: String
+    }
+    let path: String
 
-  init(path: String) {
-    self.path = path
-  }
-  init(directory: Directory, name: String) {
-    self.init(path: directory.path + name)
-  }
-  func copy() -> File {
-    return File(path: path + " copy")
-  }
+    init(path: String) {
+      self.path = path
+    }
+    init(directory: Directory, name: String) {
+      self.init(path: directory.path + name)
+    }
+    func copy() -> File {
+      return File(path: path + " copy")
+    }
 }
 struct Directory: FileSystemItem {
   var name: String {
     return Array(path).split { (char) -> Bool in char == "/" }.last.map { String($0) } ?? ""
-  }
-  let path: String
-  init(path: String) {
-    self.path = path
-  }
-  init(directory: Directory, name: String) {
-    self.init(path: directory.path + name + "/")
-  }
-  func copy() -> Directory {
-    return Directory(path: path[path.startIndex..<(path.index(before: path.endIndex))] + " copy/")
-  }
+    }
+    let path: String
+    init(path: String) {
+      self.path = path
+    }
+    init(directory: Directory, name: String) {
+      self.init(path: directory.path + name + "/")
+    }
+    func copy() -> Directory {
+      return Directory(path: path[path.startIndex..<(path.index(before: path.endIndex))] + " copy/")
+    }
 }
 
 // extensions
@@ -768,34 +768,34 @@ assert(["あいうえお", "かきくけこ"].isHiragana2 == true)
 // error handling
 /*
 do {
-  enum NetworkError: Error {
-    case Unreachable
-    case UnexpectedStatusCode(Int)
-  }
+enum NetworkError: Error {
+case Unreachable
+case UnexpectedStatusCode(Int)
+}
 
-  func getResourceFromNetwork() throws -> String {
-    let URL = "http://www.hatena.ne.jp/"
-    if !checkConnection(URL) {
-      throw NetworkError.Unreachable
-    }
-    let (statusCode, response) = connectHTTP(URL, method: "GET")
-    if case (200..<300) = statusCode {
-      return response
+func getResourceFromNetwork() throws -> String {
+let URL = "http://www.hatena.ne.jp/"
+if !checkConnection(URL) {
+throw NetworkError.Unreachable
+}
+let (statusCode, response) = connectHTTP(URL, method: "GET")
+if case (200..<300) = statusCode {
+return response
     } else {
-      throw NetworkError.UnexpectedStatusCode(statusCode)
-    }
-  }
+throw NetworkError.UnexpectedStatusCode(statusCode)
+}
+}
 
-  do {
-    let res = try getResourceFromNetwork()
-    print(res)
+do {
+let res = try getResourceFromNetwork()
+print(res)
   } catch NetworkError.Unreachable {
-    print("Unreachable")
+print("Unreachable")
   } catch NetworkError.UnexpectedStatusCode(let statusCode) {
-    print("Unexpected status code \(statusCode)")
+print("Unexpected status code \(statusCode)")
   } catch {
-    print("Unknown problem")
-  }
+print("Unknown problem")
+}
 }
 */
 
@@ -815,5 +815,83 @@ do {
     }
   }
   let lot = ConsumptionLot("A", "B", "C")
-  lot.choose()
+  assert(["A", "B", "C"].contains(lot.choose()))
+}
+
+// Associated types and type constraints
+protocol LotType {
+  associatedtype ItemType
+  var remains: [ItemType] { get }
+  init(_ items: ItemType...)
+  func choose() -> ItemType?
+}
+do {
+  class ConsumptionLot<Item>: LotType {
+    typealias ItemType = Item
+    var remains: [Item]
+    required init(_ items: Item...) {
+      self.remains = items
+    }
+    func choose() -> Item? {
+      if remains.isEmpty {
+        return nil
+      }
+      let randomIndex = Int(arc4random_uniform(UInt32(remains.count)))
+      return remains.remove(at: randomIndex)
+    }
+  }
+
+  class ConsumptionlessLot<Item>: LotType {
+    typealias ItemType = Item
+    var remains: [Item]
+    required init(_ items: Item...) {
+      self.remains = items
+    }
+    func choose() -> Item? {
+      if remains.isEmpty {
+        return nil
+      }
+      let randomIndex = Int(arc4random_uniform(UInt32(remains.count)))
+      return remains[randomIndex]
+    }
+  }
+  func pickItems<Lot: LotType>(from lot: Lot, count: Int) -> [Lot.ItemType] {
+    var result: [Lot.ItemType] = []
+    for _ in (0..<count) {
+      lot.choose().map { result.append($0) }
+    }
+    return result
+  }
+  let lot = ConsumptionlessLot("A", "B", "C", "D")
+  pickItems(from: lot, count: 3).forEach{ i in
+    assert(["A", "B", "C", "D"].contains(i))
+  }
+}
+
+// Access Controll
+public class ConsumptionLot<Item> {
+  public private(set) var remains: [Item]
+  public required init(_ items: Item...) {
+    self.remains = items
+  }
+  public func choose() -> Item? {
+    if remains.isEmpty {
+      return nil
+    }
+    let randomIndex = Int(arc4random_uniform(UInt32(remains.count)))
+    return remains.remove(at: randomIndex)
+  }
+}
+
+// Availability
+do {
+  @available(iOS 9.0, *)
+  func someFunction() -> String {
+    return "iOS 9 or later"
+  }
+  var result: String = ""
+  if #available(iOS 9.0, *) {
+    result = someFunction()
+  }
+  assert(result == "iOS 9 or later")
 }
