@@ -1,6 +1,9 @@
 // swift tutorial
 // https://employment.en-japan.com/engineerhub/entry/2017/05/25/110000
-// 後半はほぼこれ https://github.com/hatena/Hatena-Textbook/blob/master/swift-programming-language.md
+// 後半はほぼこれ
+// https://github.com/hatena/Hatena-Textbook/blob/master/swift-programming-language.md
+// https://github.com/hatena/Hatena-Textbook/blob/master/swift-development-apps.md
+
 
 import Foundation
 
@@ -895,3 +898,54 @@ do {
   }
   assert(result == "iOS 9 or later")
 }
+
+// HTTP Request
+// import Foundation
+// do {
+//   let url = URL(string: "https://api.github.com/search/repositories?q=Hatena&page=1")!
+//   var request = URLRequest(url: url)
+//   request.httpMethod = "GET"
+//   request.addValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
+//   let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+//     if let error = error {
+//       print(error)
+//     }
+//     if let data = data {
+//       print(data)
+//       // print(try? NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject])
+//     }
+//   }
+//   task.resume()
+// }
+
+do {
+  let urlOpt = URL(string: "https://images-api.nasa.gov/search?media_type=image")
+  let request = URLRequest(url: urlOpt!)
+  let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+    if let error = error {
+      print(error)
+    }
+    if let data = data {
+      print(data)
+    }
+    print("!!!!!!!!!!!!!! debug1111111")
+    // レスポンスに対する処理をここで行う（コールバック関数）
+    // task.resume() を実行するとリクエストが行われ、
+    // レスポンスが返ってきた時点でここの処理が非同期で行われる
+  }
+  // リクエストを実行
+  print("!!!!!!!!!!!!!! debug2")
+  task.resume()
+  print("!!!!!!!!!!!!!! debug3")
+}
+
+
+
+// import Foundation
+// let urlOpt = URL(string: "https://images-api.nasa.gov/search?media_type=image")
+// let request = URLRequest(url: urlOpt!)
+// let task = URLSession.shared.dataTask(with: request) { data, response, error in
+//     print(data)
+//     print(response)
+//     print(error)
+// }
